@@ -14,9 +14,9 @@ class AuthViewModel:ViewModel() {
     private val auth:FirebaseAuth=FirebaseAuth.getInstance()
 //    conext needed for toast messages
 //    navcontroller for nav to next screen
-    fun signup(username:String,email:String,password:String,confirmpassword:String,navController: NavController,context:Context){
+    fun signup(username:String,email:String,fullname:String,password:String,confirmpassword:String,navController: NavController,context:Context){
 
-        if(username.isBlank() || password.isBlank() || confirmpassword.isBlank() || email.isBlank()){
+        if(username.isBlank() || password.isBlank() || fullname.isBlank() || confirmpassword.isBlank() || email.isBlank()){
             Toast.makeText(context,"Please fill all the fields!",Toast.LENGTH_LONG).show()
             return
         }
@@ -28,7 +28,7 @@ class AuthViewModel:ViewModel() {
             task ->
             if (task.isSuccessful){
                 val userId=auth.currentUser?.uid ?: ""
-                val user = UserModel(username=username,email=email,userId=userId)
+                val user = UserModel(username=username,fullname=fullname,email=email,userId=userId)
 
                 saveUserToDatabase(user,navController,context)
             }else{
@@ -71,9 +71,9 @@ class AuthViewModel:ViewModel() {
             }
         }
     }
-    fun direct_login(navController: NavController){
-        navController.navigate(ROUTE_LOGIN){
-            popUpTo( 0)
-        }
-    }
+//    fun direct_login(navController: NavController){
+//        navController.navigate(ROUTE_LOGIN){
+//            popUpTo( 0)
+//        }
+//    }
 }
